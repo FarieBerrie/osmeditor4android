@@ -17,20 +17,25 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import de.blau.android.App;
 import de.blau.android.Main;
 import de.blau.android.Main.UndoListener;
+import de.blau.android.dialogs.OnRelationsSelectedListener;
+import de.blau.android.dialogs.RelationSelection;
 import de.blau.android.R;
 import de.blau.android.exception.OsmIllegalOperationException;
 import de.blau.android.osm.MergeResult;
 import de.blau.android.osm.Node;
 import de.blau.android.osm.OsmElement;
 import de.blau.android.osm.Relation;
+import de.blau.android.osm.RelationMemberPosition;
 import de.blau.android.osm.Way;
 import de.blau.android.prefs.PrefEditor;
 import de.blau.android.prefs.Preferences;
 import de.blau.android.util.Snack;
 import de.blau.android.util.ThemeUtils;
 import de.blau.android.util.Util;
+import de.blau.android.util.collections.MultiHashMap;
 
 public class ExtendSelectionActionModeCallback extends EasyEditActionModeCallback {
     private static final String DEBUG_TAG = "ExtendSelectionAct...";
@@ -38,7 +43,8 @@ public class ExtendSelectionActionModeCallback extends EasyEditActionModeCallbac
     private static final int MENUITEM_MERGE          = 6;
     private static final int MENUITEM_RELATION       = 7;
     private static final int MENUITEM_ORTHOGONALIZE  = 8;
-    private static final int MENUITEM_MERGE_POLYGONS = 9;
+    private static final int MENUITEM_ADD_TO_RELATIONS = 9;
+    private static final int MENUITEM_MERGE_POLYGONS = 10;
 
     private List<OsmElement> selection;
     private List<OsmElement> sortedWays;
@@ -173,7 +179,7 @@ public class ExtendSelectionActionModeCallback extends EasyEditActionModeCallbac
         }
         menu.add(Menu.NONE, MENUITEM_RELATION, Menu.CATEGORY_SYSTEM, R.string.menu_relation)
                 .setIcon(ThemeUtils.getResIdFromAttribute(main, R.attr.menu_relation));
-
+        menu.add(Menu.NONE, MENUITEM_ADD_TO_RELATIONS, Menu.CATEGORY_SYSTEM, "Add to relations...");
         List<Way> selectedWays = logic.getSelectedWays();
         if (selectedWays != null && !selectedWays.isEmpty()) {
             menu.add(Menu.NONE, MENUITEM_ORTHOGONALIZE, Menu.NONE, R.string.menu_orthogonalize)
@@ -260,6 +266,16 @@ public class ExtendSelectionActionModeCallback extends EasyEditActionModeCallbac
                 break;
             case MENUITEM_RELATION:
                 main.startSupportActionMode(new AddRelationMemberActionModeCallback(manager, selection));
+                break;
+            case MENUITEM_ADD_TO_RELATIONS:
+                RelationSelection.showDialog(main, selection, new OnRelationsSelectedListener() {
+                    private static final long serialVersionUID = 1L;
+
+                    @Override
+                    public void onRelationsSelected(MultiHashMap<Long, RelationMemberPosition> newMemberships) {
+                        App.getLogic().updateParentRelations(main, selection, newMemberships);
+                    }
+                });
                 break;
             case MENUITEM_ORTHOGONALIZE:
                 List<Way> selectedWays = logic.getSelectedWays();
