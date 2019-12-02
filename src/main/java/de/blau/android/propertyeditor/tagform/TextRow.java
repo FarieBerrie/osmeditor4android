@@ -24,6 +24,8 @@ import de.blau.android.App;
 import de.blau.android.R;
 import de.blau.android.names.Names;
 import de.blau.android.names.Names.NameAndTags;
+import de.blau.android.net.UrlCheck;
+import de.blau.android.net.UrlCheck.CheckStatus;
 import de.blau.android.osm.Tags;
 import de.blau.android.presets.Preset.PresetItem;
 import de.blau.android.presets.Preset.ValueType;
@@ -215,6 +217,12 @@ public class TextRow extends LinearLayout implements KeyValueRow {
                 String rowValue = row.getValue();
                 if (!hasFocus && !rowValue.equals(value)) {
                     Log.d(DEBUG_TAG, "onFocusChange");
+                    if (isWebsite) {
+                        UrlCheck.Result checkResult = UrlCheck.check(rowValue);
+                        System.out.println("Result " + checkResult);
+                        rowValue = checkResult.getUrl();
+                        ourValueView.setText(rowValue);
+                    }
                     caller.tagListener.updateSingleValue(key, rowValue);
                     if (rowLayout instanceof EditableLayout) {
                         ((EditableLayout) rowLayout).putTag(key, rowValue);
@@ -225,7 +233,7 @@ public class TextRow extends LinearLayout implements KeyValueRow {
                         ourValueView.setAdapter(adapter);
                     }
                     if (isWebsite) {
-                        TagEditorFragment.initWebsite(ourValueView);
+                        // TagEditorFragment.initWebsite(ourValueView);
                     } else if (isMPHSpeed) {
                         TagEditorFragment.initMPHSpeed(rowLayout.getContext(), ourValueView, caller.propertyEditorListener);
                     } else if (valueType == null) {
