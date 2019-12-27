@@ -37,6 +37,7 @@ public class Preferences {
     private boolean       isOpenStreetBugsEnabled;
     private boolean       isPhotoLayerEnabled;
     private final boolean isKeepScreenOnEnabled;
+    private final boolean isLiteModeEnabled;
     private final boolean useBackForUndo;
     private final boolean largeDragArea;
     private final boolean tagFormEnabled;
@@ -148,6 +149,7 @@ public class Preferences {
         isPhotoLayerEnabled = prefs.getBoolean(r.getString(R.string.config_enablePhotoLayer_key), false);
         tagFormEnabled = prefs.getBoolean(r.getString(R.string.config_tagFormEnabled_key), true);
         isKeepScreenOnEnabled = prefs.getBoolean(r.getString(R.string.config_enableKeepScreenOn_key), false);
+        isLiteModeEnabled = prefs.getBoolean(r.getString(R.string.config_enableLiteMode_key),false);
         useBackForUndo = prefs.getBoolean(r.getString(R.string.config_use_back_for_undo_key), false);
         largeDragArea = prefs.getBoolean(r.getString(R.string.config_largeDragArea_key), false);
         enableNameSuggestions = prefs.getBoolean(r.getString(R.string.config_enableNameSuggestions_key), true);
@@ -346,6 +348,9 @@ public class Preferences {
     public boolean isKeepScreenOnEnabled() {
         return isKeepScreenOnEnabled;
     }
+
+
+    public boolean isLiteModeEnabled(){return isLiteModeEnabled;}
 
     /**
      * Check if the back key should be used for undo

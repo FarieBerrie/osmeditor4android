@@ -471,7 +471,7 @@ public class Main extends FullScreenAppCompatActivity
         if(prefs.isLiteModeEnabled()){
             layout=R.layout.vlite;
             Log.d(DEBUG_TAG,"using Lite Mode");
-            vmode.
+            vmode.OnLiteModeClick();
 
         }
 
