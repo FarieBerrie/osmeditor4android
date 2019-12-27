@@ -779,6 +779,8 @@ avoided by using an offline data source.</string>
     <string name="config_enablePhotoLayer_summary">Display geo-referenced photos.</string>
     <string name="config_enableKeepScreenOn_title">Keep screen on</string>
     <string name="config_enableKeepScreenOn_summary">Prevent screen from turning off to save power.</string>
+    <string name="config_LiteMode_title">Enable a Lite Mode</string>
+    <string name="config_LiteMode_summary">Change the UI and theme for the user experience</string>
     <string name="config_largeDragArea_title">Large node drag area</string>
     <string name="config_largeDragArea_summary">Provide large area for dragging nodes.</string>
     <string name="config_advancedprefs">Advanced preferences</string>

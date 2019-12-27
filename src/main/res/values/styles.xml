@@ -209,6 +209,66 @@
 		<item name="snack_warning">@color/material_orange</item>
 		<item name="snack_error">@color/material_red</item>
 	</style>
+
+	<style name="Theme.custom.LiteMode." parent="@style/Theme.AppCompat.Light.NoActionBar">
+		<!-- 		<item name="actionDropDownStyle">@style/customActionBarDropdown</item> -->
+		<item name="windowActionModeOverlay">true</item>
+		<!--  icons  -->
+		<item name="menu_gps">@drawable/ic_action_location_found_holo_light</item>
+		<item name="menu_config">@drawable/ic_action_settings_holo_light</item>
+		<item name="menu_find">@drawable/ic_menu_search_holo_light</item>
+		<item name="menu_help">@drawable/ic_action_help_holo_light</item>
+		<item name="menu_undo">@drawable/ic_action_undo_holo_light</item>
+		<item name="menu_delete">@drawable/ic_action_discard_holo_light</item>
+		<item name="menu_cut">@drawable/ic_menu_cut_holo_light</item>
+		<item name="menu_copy">@drawable/ic_action_copy_holo_light</item>
+		<item name="menu_paste">@drawable/ic_action_paste_holo_light</item>
+		<item name="menu_save">@drawable/ic_action_save_holo_light</item>
+		<item name="menu_rotate">@drawable/ic_action_rotate_right_holo_light</item>
+		<item name="menu_transfer">@drawable/ic_action_import_export_holo_light</item>
+		<item name="menu_merge">@drawable/ic_action_merge_holo_light</item>
+		<item name="menu_unjoin">@drawable/ic_action_split_holo_light</item>
+		<item name="menu_split">@drawable/ic_content_cut_light_36px</item>
+		<item name="menu_append">@drawable/ic_action_new_holo_light</item>
+		<item name="menu_reverse">@drawable/ic_action_repeat_holo_light</item>
+		<item name="menu_information">@drawable/ic_action_about_holo_light</item>
+		<item name="menu_history">@drawable/ic_action_time_holo_light</item>
+		<item name="menu_tags">@drawable/ic_action_labels_holo_light</item>
+		<item name="menu_camera">@drawable/camera_light</item>
+		<item name="menu_address">@drawable/address_light</item>
+		<item name="menu_multi_select">@drawable/multi_select_light</item>
+		<item name="menu_ortho">@drawable/ortho_light</item>
+		<item name="menu_extract_node">@drawable/extract_node_light</item>
+		<item name="menu_relation">@drawable/relation_light</item>
+		<item name="menu_relation_members">@drawable/relation_members_light</item>
+		<item name="menu_relation_add_member">@drawable/relation_add_member_light</item>
+		<item name="menu_tools">@drawable/spanner_light</item>
+		<item name="menu_download">@drawable/ic_action_download_holo_light</item>
+		<item name="menu_add_restriction">@drawable/no_left_turn_light</item>
+		<item name="menu_preset">@drawable/preset_light</item>
+		<item name="menu_bug">@drawable/bug_light</item>
+		<item name="undolist_undo">@drawable/undolist_undo_light</item>
+		<item name="undolist_redo">@drawable/undolist_redo_light</item>
+		<item name="alert_dialog">@drawable/ic_action_warning_holo_light</item>
+		<item name="lightbulb_dialog">@drawable/lightbulb_black</item>
+		<item name="mic">@drawable/ic_action_mic_holo_light</item>
+		<item name="search">@drawable/ic_action_search_holo_light</item>
+		<item name="add">@drawable/ic_add_white_36dp</item>
+		<item name="remove">@drawable/ic_remove_white_36dp</item>
+		<item name="name">@drawable/name_light</item>
+		<item name="layer_visible">@drawable/ic_visibility_black_24dp</item>
+		<item name="layer_not_visible">@drawable/ic_visibility_off_black_24dp</item>
+		<item name="zoom_to_layer_extent">@drawable/ic_crop_free_black_24dp</item>
+		<item name="more_small">@drawable/ic_more_vert_black_24dp</item>
+		<item name="information_small">@drawable/ic_info_outline_black_24dp</item>
+		<!-- styles -->
+		<item name="ActionButton">@style/ActionButtonLight</item>
+		<item name="EditText">@style/EditTextLight</item>
+		<!--  colors -->
+		<item name="snack_info">@color/material_teal</item>
+		<item name="snack_warning">@color/material_orange</item>
+		<item name="snack_error">@color/material_red</item>
+	</style>
 	
 	<style name="Theme.customMain.Light.FullScreen" parent="Theme.customMain.Light">
         <item name="android:windowFullscreen">true</item>

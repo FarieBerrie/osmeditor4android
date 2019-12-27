@@ -467,6 +467,14 @@ public class Main extends FullScreenAppCompatActivity
                 layout = R.layout.main_fullscreen;
             }
         }
+
+        if(prefs.isLiteModeEnabled()){
+            layout=R.layout.vlite;
+            Log.d(DEBUG_TAG,"using Lite Mode");
+            vmode.
+
+        }
+
         if (prefs.lightThemeEnabled()) {
             if (statusBarHidden()) {
                 setTheme(R.style.Theme_customMain_Light_FullScreen);

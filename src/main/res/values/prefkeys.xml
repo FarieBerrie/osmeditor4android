@@ -16,6 +16,7 @@
     <string name="config_enableOpenStreetBugs_key">enableOpenStreetBugs</string>
     <string name="config_enablePhotoLayer_key">enablePhotoLayer</string>
     <string name="config_enableKeepScreenOn_key">enableKeepScreenOn</string>
+    <string name="config_enableLiteMode_key">enableLiteMode</string>
     <string name="config_enableGPSOverlay_key">enableGPSOverlay</string>
     <string name="config_backgroundLayer_key">backgroundLayer</string>
     <string name="config_overlayLayer_key">overlayLayer</string>
