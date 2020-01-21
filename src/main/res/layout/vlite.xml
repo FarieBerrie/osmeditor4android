@@ -13,6 +13,7 @@
         android:background="?attr/colorPrimary"
         android:minHeight="?attr/actionBarSize">
     </android.support.v7.widget.Toolbar>
+
     <RelativeLayout
         android:id="@+id/mainMap"
         android:layout_width="match_parent"
@@ -39,21 +40,17 @@
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/follow"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="false"
+            android:layout_width="73dp"
+            android:layout_height="94dp"
             android:layout_alignParentTop="true"
-            android:layout_alignParentRight="true"
             android:layout_gravity="top"
             android:layout_marginLeft="-1dp"
-            android:layout_marginTop="79dp"
-            android:layout_marginRight="2dp"
+            android:layout_marginTop="115dp"
             android:clickable="true"
             android:src="@drawable/ic_filter_tilt_shift_black_36dp"
             android:theme="@style/Theme.customMain"
             app:backgroundTint="#4CAF50"
-            app:fabSize="mini"
-            app:useCompatPadding="true" />
+            app:fabSize="normal" />
 
         <de.blau.android.views.ZoomControls
             android:id="@+id/zoom_controls"
@@ -63,11 +60,12 @@
             android:layout_alignParentTop="false"
             android:layout_alignParentRight="false"
             android:layout_alignParentBottom="true"
-            android:layout_marginLeft="0dp"
+            android:layout_marginLeft="-22dp"
             android:layout_marginRight="193dp"
-            android:layout_marginBottom="175dp"
+            android:layout_marginBottom="209dp"
             android:rotation="270" />
     </RelativeLayout>
+
     <FrameLayout
         android:id="@+id/bottomBar"
         android:layout_width="match_parent"

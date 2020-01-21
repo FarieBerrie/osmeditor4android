@@ -3454,6 +3454,7 @@ public class Main extends FullScreenAppCompatActivity
                 if (logic.isLocked()) {
                     if(prefs.isLiteModeEnabled()){
                         logic.setLocked(false);
+                        Snack.barInfo(Main.this, R.string.toast_editing_in_lite_mode);
                     }
                     if (isConnectedOrConnecting() && prefs.voiceCommandsEnabled()) {
                         locationForIntent = lastLocation; // location when we
