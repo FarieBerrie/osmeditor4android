@@ -17,11 +17,16 @@
             android:title="@string/config_enableKeepScreenOn_title"
             android:key="@string/config_enableKeepScreenOn_key"
             android:summary="@string/config_enableKeepScreenOn_summary"
-            android:defaultValue="false" />
+            android:defaultValue="false" />"
         <CheckBoxPreference
             android:key="@string/config_largeDragArea_key"
             android:title="@string/config_largeDragArea_title"
             android:summary="@string/config_largeDragArea_summary"
+            android:defaultValue="false" />
+        <CheckBoxPreference
+            android:key="@string/config_enableLiteMode_key"
+            android:title="@string/config_LiteMode_title"
+            android:summary="@string/config_LiteMode_summary"
             android:defaultValue="false" />
     </PreferenceCategory>
     <PreferenceCategory

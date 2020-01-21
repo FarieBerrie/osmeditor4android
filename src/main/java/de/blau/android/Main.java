@@ -470,9 +470,6 @@ public class Main extends FullScreenAppCompatActivity
 
         if(prefs.isLiteModeEnabled()){
             layout=R.layout.vlite;
-            Log.d(DEBUG_TAG,"using Lite Mode");
-            vmode.OnLiteModeClick();
-
         }
 
         if (prefs.lightThemeEnabled()) {
@@ -1319,6 +1316,10 @@ public class Main extends FullScreenAppCompatActivity
             if (logic.isLocked() && lock != null) {
                 lock.performClick();
             }
+            else if(prefs.isLiteModeEnabled()){
+                lock.isInEditMode();
+                logic.dataUnlock();
+            }
             if (easyEditManager != null) {
                 easyEditManager.editElements();
             }
@@ -1644,8 +1645,12 @@ public class Main extends FullScreenAppCompatActivity
         Logic logic = App.getLogic();
         if (logic.isLocked()) {
             lock.setImageState(new int[] { 0 }, false);
-            disableSimpleActionsButton();
-        } else {
+            disableSimpleActionsButton(); }
+
+        else if (prefs.isLiteModeEnabled()){
+            logic.setLocked(false);
+        }
+        else {
             lock.setImageState(new int[] { android.R.attr.state_pressed }, false);
             enableSimpleActionsButton();
         }
@@ -3447,6 +3452,9 @@ public class Main extends FullScreenAppCompatActivity
 
             if (isInEditZoomRange) {
                 if (logic.isLocked()) {
+                    if(prefs.isLiteModeEnabled()){
+                        logic.setLocked(false);
+                    }
                     if (isConnectedOrConnecting() && prefs.voiceCommandsEnabled()) {
                         locationForIntent = lastLocation; // location when we
                                                           // touched the

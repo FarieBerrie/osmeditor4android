@@ -22,6 +22,11 @@
             android:title="@string/config_largeDragArea_title"
             android:summary="@string/config_largeDragArea_summary"
             android:defaultValue="false" />
+        <android.support.v7.preference.CheckBoxPreference
+            android:key="@string/config_enableLiteMode_key"
+            android:title="@string/config_LiteMode_title"
+            android:summary="@string/config_LiteMode_summary"
+            android:defaultValue="false" />
     </android.support.v7.preference.PreferenceCategory>
     <android.support.v7.preference.PreferenceCategory
         android:title="@string/config_advancedprefs">
