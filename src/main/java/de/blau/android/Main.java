@@ -2403,7 +2403,7 @@ public class Main extends FullScreenAppCompatActivity
             return true;
 
         case R.id.menu_tools_update_imagery_configuration:
-            new AsyncTask<Void, Void, Void>() {
+            new  AsyncTask<Void, Void, Void>() {
                 TileLayerDatabase db = new TileLayerDatabase(Main.this);
 
                 @Override
@@ -3452,16 +3452,17 @@ public class Main extends FullScreenAppCompatActivity
 
             if (isInEditZoomRange) {
                 if (logic.isLocked()) {
-                    if(prefs.isLiteModeEnabled()){
-                        logic.setLocked(false);
-                        Snack.barInfo(Main.this, R.string.toast_editing_in_lite_mode);
-                    }
                     if (isConnectedOrConnecting() && prefs.voiceCommandsEnabled()) {
                         locationForIntent = lastLocation; // location when we
                                                           // touched the
                                                           // screen
                         startVoiceRecognition();
-                    } else {
+                    }
+                    if(prefs.isLiteModeEnabled()){
+                        logic.setLocked(false);
+                        Snack.barInfo(Main.this, R.string.toast_editing_in_lite_mode);
+                    }
+                    else if(!prefs.isLiteModeEnabled()) {
                         Snack.barInfoShort(Main.this, R.string.toast_unlock_to_edit);
                     }
                 } else {
@@ -3483,7 +3484,13 @@ public class Main extends FullScreenAppCompatActivity
                     co.layer.onSelected(Main.this, co.object);
                     break;
                 default:
-                    v.showContextMenu();
+                    if(prefs.isLiteModeEnabled() ){
+                        descheduleAutoLock();
+                        ClickedObject ci = clickedObjects.get(0);
+                        ci.layer.onSelected(Main.this, ci.object);
+                    }else {
+                        v.showContextMenu();
+                    }
                     break;
                 }
             }
@@ -3637,11 +3644,20 @@ public class Main extends FullScreenAppCompatActivity
                         ACRAHelper.nocrashReport(null, debugString);
                     }
                     break;
+                    case 2:
+                        if(prefs.isLiteModeEnabled() && clickedObjects.size() == 1){
+                            descheduleAutoLock();
+                            getEasyEditManager().editElement(clickedNodesAndWays.get(0));
+                        }
                 default:
                     // multiple possible elements touched - show menu
-                    if (menuRequired()) {
+                    if(menuRequired() && prefs.isLiteModeEnabled()){
+                        getEasyEditManager().editElement(clickedNodesAndWays.get(0));
+                    }
+                    else if (menuRequired()) {
                         v.showContextMenu();
-                    } else {
+                    }
+                    else {
                         // menuRequired tells us it's ok to just take the first one
                         if (inEasyEditMode) {
                             getEasyEditManager().editElement(clickedNodesAndWays.get(0));
@@ -3814,14 +3830,17 @@ public class Main extends FullScreenAppCompatActivity
                         getEasyEditManager().nothingTouched(true);
                     }
                     break;
-                case 1:
+                    case 1:
                     if (inEasyEditMode) {
                         getEasyEditManager().startExtendedSelection(clickedNodesAndWays.get(0));
                     }
                     break;
                 default:
                     // multiple possible elements touched - show menu
-                    if (inEasyEditMode) {
+                    if(prefs.isLiteModeEnabled()){
+                        v.showContextMenu();
+                    }
+                    if (!prefs.isLiteModeEnabled() && inEasyEditMode) {
                         if (menuRequired()) {
                             Log.d(DEBUG_TAG, "onDoubleTap displaying menu");
                             doubleTap = true; // ugly flag
