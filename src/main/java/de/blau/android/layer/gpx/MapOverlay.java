@@ -122,7 +122,6 @@ public class MapOverlay extends StyleableLayer implements Serializable, ExtentIn
             }
         }
     }
-
     @Override
     protected void onDrawFinished(Canvas c, IMapView osmv) {
         // do nothing

@@ -113,6 +113,7 @@ import de.blau.android.imageryoffset.ImageryOffsetUtils;
 import de.blau.android.javascript.EvalCallback;
 import de.blau.android.layer.ClickableInterface;
 import de.blau.android.layer.MapViewLayer;
+import de.blau.android.layer.data.MapOverlay;
 import de.blau.android.listener.UpdateViewListener;
 import de.blau.android.osm.BoundingBox;
 import de.blau.android.osm.Node;
@@ -3462,7 +3463,7 @@ public class Main extends FullScreenAppCompatActivity
                         logic.setLocked(false);
                         Snack.barInfo(Main.this, R.string.toast_editing_in_lite_mode);
                     }
-                    else if(!prefs.isLiteModeEnabled()) {
+                    else {
                         Snack.barInfoShort(Main.this, R.string.toast_unlock_to_edit);
                     }
                 } else {
@@ -3653,6 +3654,7 @@ public class Main extends FullScreenAppCompatActivity
                     // multiple possible elements touched - show menu
                     if(menuRequired() && prefs.isLiteModeEnabled()){
                         getEasyEditManager().editElement(clickedNodesAndWays.get(0));
+                        // getSupportFragmentManager().beginTransaction().add(, clickedObjects.get(0));
                     }
                     else if (menuRequired()) {
                         v.showContextMenu();
@@ -3731,6 +3733,7 @@ public class Main extends FullScreenAppCompatActivity
                 }
             }
         }
+
 
         /**
          * Checks if a menu should be shown based on clickedNodesAndWays and clickedBugs. ClickedNodesAndWays needs to
@@ -3824,6 +3827,9 @@ public class Main extends FullScreenAppCompatActivity
                 clickedNodesAndWays = dataIsVisible ? App.getLogic().getClickedNodesAndWays(x, y) : new ArrayList<>();
                 switch (clickedNodesAndWays.size()) {
                 case 0:
+                    if(prefs.isLiteModeEnabled()){
+                        logic.setLocked(true);
+                    }
                     // no elements were touched
                     if (inEasyEditMode) {
                         // short cut to finishing multi-select

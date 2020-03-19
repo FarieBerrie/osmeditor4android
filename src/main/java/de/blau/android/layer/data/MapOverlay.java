@@ -974,7 +974,6 @@ public class MapOverlay extends MapViewLayer implements ExtentInterface, Configu
             }
         }
     }
-
     /**
      * Draw a circle with center at x,y with the house number in it
      * 
@@ -1204,6 +1203,7 @@ public class MapOverlay extends MapViewLayer implements ExtentInterface, Configu
             canvas.drawLines(linePoints, 0, pointsSize, paint);
             paint = DataStyle.getInternal(DataStyle.WAY_DIRECTION).getPaint();
             drawWayArrows(canvas, linePoints, pointsSize, false, paint, displayHandles && tmpDrawingSelectedWays.size() == 1);
+            if (prefs.isLiteModeEnabled()) { paintSelectedHandles(canvas); }
             labelFontStyle = DataStyle.LABELTEXT_NORMAL_SELECTED;
             labelFontStyleSmall = DataStyle.LABELTEXT_SMALL_SELECTED;
         } else if (isMemberOfSelectedRelation) {
@@ -1341,6 +1341,29 @@ public class MapOverlay extends MapViewLayer implements ExtentInterface, Configu
         }
     }
 
+    private void paintSelectedHandles(@NonNull Canvas canvas){
+        if (handles != null && handles.size() > 0){
+            canvas.save();
+            float lastX = 0;
+            float lastY = 0;
+            for (long l : handles.values()){
+                float X = Float.intBitsToFloat((int)(l >>> 32));
+                float Y = Float.intBitsToFloat((int) (l));
+                canvas.translate(X - lastX, Y - lastY);
+                lastX = X;
+                lastY = Y;
+
+                canvas.drawPath(DataStyle.getCurrent().getLPath(), DataStyle.getInternal(DataStyle.Lite_Mode_Handle).getPaint());
+            }
+            canvas.restore();
+            handles.clear();
+        }
+    }
+
+    private void paintSelectedNodes(@NonNull Canvas canvas){
+
+    }
+
     /**
      * Draws directional arrows for a way
      * 
@@ -1371,7 +1394,12 @@ public class MapOverlay extends MapViewLayer implements ExtentInterface, Configu
                     if (handles == null) {
                         handles = new LongHashSet();
                     }
-                    handles.put(((long) (Float.floatToRawIntBits(x1 + xDelta / 2)) << 32) + (long) Float.floatToRawIntBits(y1 + yDelta / 2));
+                    if(prefs.isLiteModeEnabled()){
+                     handles.put(((long) (Float.floatToRawIntBits(x1 + xDelta)) << 32)  + (long) Float.floatToRawIntBits(y1 + yDelta));
+                    }
+                    else {
+                        handles.put(((long) (Float.floatToRawIntBits(x1 + xDelta / 2)) << 32) + (long) Float.floatToRawIntBits(y1 + yDelta / 2));
+                    }
                     xDelta = xDelta / 4;
                     yDelta = yDelta / 4;
                     secondArrow = true;

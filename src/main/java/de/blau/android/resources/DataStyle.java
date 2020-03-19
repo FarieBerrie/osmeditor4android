@@ -111,6 +111,8 @@ public final class DataStyle extends DefaultHandler {
     public static final String DONTRENDER_WAY                = "dontrender_way";
     public static final String MIN_HANDLE_LEN                = "min_handle_length";
     public static final String ICON_ZOOM_LIMIT               = "icon_zoom_limit";
+    public static final String Lite_Mode_Handle              = "lite_mode_handle";
+    public static final String Min_Lite_Mode_Handle          = "min_lhandle_length";
 
     private static final int DEFAULT_MIN_VISIBLE_ZOOM = 15;
 
@@ -507,6 +509,8 @@ public final class DataStyle extends DefaultHandler {
      */
     private Path xPath = new Path();
 
+    private Path lPath = new Path();
+
     /**
      * Arrow indicating the direction of one-way streets. Set/updated in updateStrokes
      */
@@ -518,6 +522,7 @@ public final class DataStyle extends DefaultHandler {
     private float wayToleranceValue;
     private float largDragToleranceRadius;
     private float minLenForHandle;
+    private float minLenForLHandle;
     private int   iconZoomLimit;
 
     private final Context ctx;
@@ -557,12 +562,14 @@ public final class DataStyle extends DefaultHandler {
         wayToleranceValue = Density.dpToPx(ctx, 40f);
         largDragToleranceRadius = Density.dpToPx(ctx, 100f);
         minLenForHandle = 5 * nodeToleranceValue;
+        minLenForLHandle = 8 * nodeToleranceValue;
         iconZoomLimit = 15;
 
         createOrientationPath(1.0f);
         createWayPointPath(1.0f);
         createCrosshairsPath(1.0f);
         createXPath(1.0f);
+        createLPath();
 
         Log.i(DEBUG_TAG, "setting up default profile elements");
         internalStyles = new HashMap<>();
@@ -778,6 +785,12 @@ public final class DataStyle extends DefaultHandler {
         fp.getPaint().setTypeface(Typeface.SANS_SERIF);
         fp.getPaint().setTextSize(Density.dpToPx(ctx, 12));
         internalStyles.put(LABELTEXT, fp);
+
+        fp = new FeatureStyle(Lite_Mode_Handle);
+        fp.setColor(Color.GREEN);
+        fp.getPaint().setStrokeWidth(Density.dpToPx(ctx, 30));
+        fp.getPaint().setStyle(Style.STROKE);
+        internalStyles.put(Lite_Mode_Handle, fp);
 
         fp = new FeatureStyle(LABELTEXT_NORMAL);
         fp.setColor(Color.BLACK);
@@ -1149,12 +1162,18 @@ public final class DataStyle extends DefaultHandler {
                         createWayPointPath(scale);
                         createCrosshairsPath(scale);
                         createXPath(scale);
+                        createLPath();
                         return;
                     case MIN_HANDLE_LEN:
                         String lenStr = atts.getValue("length");
                         if (lenStr != null) {
                             minLenForHandle = Density.dpToPx(ctx, Float.parseFloat(lenStr));
                         }
+                        case Min_Lite_Mode_Handle:
+                            String lhStr = atts.getValue("LiteLength");
+                            if(lhStr != null){
+                                minLenForLHandle = Density.dpToPx(ctx, Float.parseFloat(lhStr));
+                            }
                         return;
                     case ICON_ZOOM_LIMIT:
                         String zoomStr = atts.getValue("zoom");
@@ -1306,6 +1325,11 @@ public final class DataStyle extends DefaultHandler {
         xPath.lineTo(arm, arm);
         xPath.moveTo(arm, -arm);
         xPath.lineTo(-arm, arm);
+    }
+
+    private void createLPath(){
+        lPath = new Path();
+        lPath.addCircle(0,0, 15, Path.Direction.CW);
     }
 
     /**
@@ -1505,6 +1529,10 @@ public final class DataStyle extends DefaultHandler {
      */
     public Path getXPath() {
         return xPath;
+    }
+
+    public Path getLPath(){
+        return lPath;
     }
 
     /**
