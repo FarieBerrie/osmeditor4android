@@ -677,7 +677,6 @@ public final class DataStyle extends DefaultHandler {
         fp.setColor(cccBeige);
         fp.setWidthFactor(1.5f);
         internalStyles.put(SELECTED_NODE, fp);
-
         fp = new FeatureStyle(SELECTED_RELATION_NODE, internalStyles.get(SELECTED_NODE));
         int colorRelation = ContextCompat.getColor(ctx, R.color.relation);
         fp.setColor(colorRelation);
@@ -1329,7 +1328,7 @@ public final class DataStyle extends DefaultHandler {
 
     private void createLPath(){
         lPath = new Path();
-        lPath.addCircle(0,0, 15, Path.Direction.CW);
+        lPath.lineTo(200, 0);
     }
 
     /**

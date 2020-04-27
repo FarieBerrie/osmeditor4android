@@ -17,6 +17,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.FontMetrics;
 import android.graphics.Paint.Style;
@@ -60,6 +61,7 @@ import de.blau.android.presets.Preset.PresetItem;
 import de.blau.android.resources.DataStyle;
 import de.blau.android.resources.DataStyle.FeatureStyle;
 import de.blau.android.util.Coordinates;
+import de.blau.android.util.DataStorage;
 import de.blau.android.util.Density;
 import de.blau.android.util.GeoMath;
 import de.blau.android.util.Geometry;
@@ -881,6 +883,9 @@ public class MapOverlay extends MapViewLayer implements ExtentInterface, Configu
         String featureStyleFont;
         String featureStyleFontSmall;
         if (isSelected && tmpDrawingInEditRange) {
+            if(prefs.isLiteModeEnabled()){
+                canvas.drawCircle(x, y, 70, DataStyle.getInternal(DataStyle.Lite_Mode_Handle).getPaint());
+            }
             // general node style
             featureStyle = DataStyle.SELECTED_NODE;
             // style for house numbers
@@ -1203,7 +1208,11 @@ public class MapOverlay extends MapViewLayer implements ExtentInterface, Configu
             canvas.drawLines(linePoints, 0, pointsSize, paint);
             paint = DataStyle.getInternal(DataStyle.WAY_DIRECTION).getPaint();
             drawWayArrows(canvas, linePoints, pointsSize, false, paint, displayHandles && tmpDrawingSelectedWays.size() == 1);
-            if (prefs.isLiteModeEnabled()) { paintSelectedHandles(canvas); }
+            if (prefs.isLiteModeEnabled()) { paintSelectedHandles(canvas);
+            FeatureStyle litestyle = DataStyle.getInternal(DataStyle.Lite_Mode_Handle);
+            paint = litestyle.getPaint();
+            canvas.drawLines(linePoints, 0, pointsSize, paint);
+            }
             labelFontStyle = DataStyle.LABELTEXT_NORMAL_SELECTED;
             labelFontStyleSmall = DataStyle.LABELTEXT_SMALL_SELECTED;
         } else if (isMemberOfSelectedRelation) {
@@ -1360,10 +1369,6 @@ public class MapOverlay extends MapViewLayer implements ExtentInterface, Configu
         }
     }
 
-    private void paintSelectedNodes(@NonNull Canvas canvas){
-
-    }
-
     /**
      * Draws directional arrows for a way
      * 
@@ -1395,7 +1400,7 @@ public class MapOverlay extends MapViewLayer implements ExtentInterface, Configu
                         handles = new LongHashSet();
                     }
                     if(prefs.isLiteModeEnabled()){
-                     handles.put(((long) (Float.floatToRawIntBits(x1 + xDelta)) << 32)  + (long) Float.floatToRawIntBits(y1 + yDelta));
+                     handles.put(((long) (Float.floatToRawIntBits(x1 + xDelta  /2)) << 32)  + (long) Float.floatToRawIntBits(y1 + yDelta /2));
                     }
                     else {
                         handles.put(((long) (Float.floatToRawIntBits(x1 + xDelta / 2)) << 32) + (long) Float.floatToRawIntBits(y1 + yDelta / 2));
@@ -1431,7 +1436,6 @@ public class MapOverlay extends MapViewLayer implements ExtentInterface, Configu
             }
         }
     }
-
     /**
      * @param aSelectedNodes the currently selected nodes to edit.
      */
